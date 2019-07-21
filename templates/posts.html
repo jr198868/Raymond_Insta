@@ -1,9 +1,14 @@
 <div>
+    <a href = "{% url 'make_post' %}">Make a post </a>
+</div>
+
+<div>
 
     {% for post in object_list %}
         <p>{{post.title}}</p>
         <a href = "{% url 'post_detail' post.pk %}">
-        <img src="{{ post.image }}">
+            <img src="{{ post.image }}">
+        </a>
     
     {% endfor %}
 

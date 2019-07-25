@@ -1,10 +1,7 @@
-{% extent "base.html" %}
+{% extends "base.html" %}
 
 
-
-
-{% {% block content %}
-
+{% block content %}
 
 
 <div>
@@ -14,12 +11,11 @@
     {% for post in object_list %}
         <p>{{post.title}}</p>
         <a href = "{% url 'post_detail' post.pk %}">
-            <img src="{{ post.image }}">
+            <img src="{{ post.image }}" width =300 height =500>
         </a>
     
     {% endfor %}
 
 </div>
 
-
-{% endblock  %}}
+{% endblock content %}

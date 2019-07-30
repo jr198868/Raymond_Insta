@@ -13,8 +13,15 @@
             </a>
         </div>
         <div class="image__wrapper">
-            <img class="card__main-image" src="http://{{ request.META.HTTP_HOST }}/{{object.image.url}}" width='1000', height='1000'>
+            <img class="card__main-image" src="http://{{ request.META.HTTP_HOST }}/{{object.image.url}}" >
         </div>
+        <div>
+          {% if request.user.username == object.author.username %}
+          <a href="{% url 'update_post' object.id %}" class="btn btn-info" role="button"> Update Post </a >
+          <a href="{% url 'delete_post' object.id %}" class="btn btn-info" role="button"> Delete Post </a >
+          {% endif %}
+        </div>
+
         <div class="comments-portion">
             <div class="likes-timestamp-row">
                 <div class="likes">

@@ -31,9 +31,9 @@ body {
   min-height: 100%;
   background-color: #fafafa; }
   body.white {
-    background-color: #fff; }
+    background-color: rgb(255, 255, 255); }
     body.white .content-wrapper {
-      background-color: #fff; }
+      background-color: rgb(255,255,255); }
 
 a:hover {
   text-decoration: none; }
@@ -61,7 +61,7 @@ a:hover {
   position: relative;
   background-repeat: no-repeat;
   background-position: center center;
-  background-color: #fff;
+  background-color: rgb(255, 255, 255);
   cursor: pointer; }
   .picture-square > a {
     cursor: pointer; }

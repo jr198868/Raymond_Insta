@@ -19,6 +19,15 @@ class PostView(LoginRequiredMixin ,ListView):
     template_name = 'index.html'
     login_url = 'login'
 
+    def get_queryset(self):
+        current_user = self.request.user
+        following = set()
+        for conn in UserConnection.objects.filter(creator=current_user).select_related('following'):
+            following.add(conn.following)
+        return Post.objects.filter(author__in=following)
+
+
+
 class PostDetail(DetailView):
     model = Post
     template_name = "post_detail.html"
@@ -59,6 +68,33 @@ class EditProfile(UpdateView):
     model = InstaUser
     template_name = "edit_profile.html"
     fields = ('username','profile_pic',)
+
+@ajax_request
+def toggleFollow(request):
+    current_user = InstaUser.objects.get(pk=request.user.pk)
+    follow_user_pk = request.POST.get('follow_user_pk')
+    follow_user = InstaUser.objects.get(pk=follow_user_pk)
+
+    try:
+        if current_user != follow_user:
+            if request.POST.get('type') == 'follow':
+                connection = UserConnection(creator=current_user, following=follow_user)
+                connection.save()
+            elif request.POST.get('type') == 'unfollow':
+                UserConnection.objects.filter(creator=current_user, following=follow_user).delete()
+            result = 1
+        else:
+            result = 0
+    except Exception as e:
+        print(e)
+        result = 0
+
+    return {
+        'result': result,
+        'type': request.POST.get('type'),
+        'follow_user_pk': follow_user_pk
+    }
+
 
 @ajax_request
 def addLike(request):

@@ -10,6 +10,7 @@ class InstaUser(AbstractUser):
     profile_pic = ProcessedImageField(
         upload_to = 'static/images/profiles', 
         format = 'JPEG',
+        options = {'quality': 100},
         blank = True,
         null = True,
         )
@@ -63,6 +64,12 @@ class Post(models.Model):
         format = 'JPEG',
         blank = True,
         null = True,)
+
+    posted_on = models.DateTimeField(
+        auto_now_add=True,
+        null=True,
+        editable=False,
+    )
 
     def __str__(self):
         return self.title 
